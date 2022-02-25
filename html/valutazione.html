@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Inserimento valutazioni</title>
+        <link rel="stylesheet" href="css/css.css">
+    </head>
+    <body>
+        <div id="div1">  
+            <h1>Inserimento Valutazioni</h1>
+            <hr>
+            <br>    
+            <form action=../php/valutazione.php method=POST>
+                <label for=nome>Titolo del film: </label>
+                <input type=text name=nome id="nome" required>
+                <br><br>
+                <label for=valutazione>Valutazione: (1-5)</label>      
+                <input type=number name=valutazione id="valutazione" min=1 max=5>
+                <br>
+                <br>
+                <br>
+                <input type=submit name=conferma value=Conferma>
+                <br>
+                <br>
+                <br>
+            </form>
+            <form action=../php/dati.php method=GET>
+                <input type=SUBMIT name=risultati value="Visualizza Risultati">
+                <br>
+                <br>
+            </form>
+        </div>
+    </body>
+</html>
