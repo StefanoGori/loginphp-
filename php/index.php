@@ -12,24 +12,23 @@ $conn = db();
     }
             function login($conn){
                 #query login controllo nickname 
-                
                 $nickname=$_POST['nickname'];
                 $password=sha1($_POST['password']);
                 $nick="SELECT nickname FROM autenticazione";
                 $psw="SELECT password FROM autenticazione";
-                /*$stmt = $conn->prepare($nick);
-                $stamt = $conn->prepare($psw);
-                $stmt->execute();
-                $statm->execute();
-                */
                 $Apsw=$conn->query($psw);
                 $Anickname=$conn->query($nick);
+
                 #controllo errori
-                for($i=0;$i<sizeof(mysqli_fetch_array($Anickname,MYSQLI_NUM));$i++){
+                for($i=1;$i<sizeof(mysqli_fetch_array($Anickname,MYSQLI_NUM));$i++){
+                    echo"Sono dentro il primo for";
                     if($_POST['nickname']==mysqli_fetch_array($Anickname)[$i])
                     {
+                        echo"controllo nickname";
                         for($i=0;$i<sizeof(mysqli_fetch_array($Apsw));$i++){
+                            echo"sono dentro il secondo for";
                             if(sha1($_POST['password'])==$Apsw['password']){
+                                echo"controllo password";
                                 echo"
                                     <form action=../html/valutazione.html method=POST>
                                         <input type=submit value=LOGIN>
@@ -39,62 +38,19 @@ $conn = db();
                         }
                     }
                     else{
-                        $msg="NICKNAME O PASSWORD ERRATI";
-                        echo"
-                            <script type=text/javascript>
-                                alert(. $msg .)
-                            </script>
-                        ";
+                        echo"NICKNAME O PASSWORD ERRATI";
                     }
                 }
-                /*
-                while($row=mysqli_fetch_array(,MYSQLI_NUM))
-                {
-                    if($_POST['nickname']==$row[1])
-                    {
-                        while($raw=mysqli_fetch_array($risultatoP,MYSQLI_NUM))
-                        {
-                            if(sha1($_POST['password'])==$raw[2])
-                            {
-                                echo"
-                                    <form action=valutazione.php method=POST>
-                                        <input type=submit value=LOGIN>
-                                    </form>
-                                ";
-                            }
-                        }
-                    }
-                }
-                */
             }
 
             function registrazione($conn){
-                
                 $nickname=$_POST['nickname'];
                 $password=sha1($_POST['password']);
-                
-
                 $sql="INSERT into autenticazione (nickname, password)
                 values('$nickname', '$password')";
-
                 $query="SELECT nickname, password FROM autenticazione";
-
                 $stmt=$conn->query($query);
-
-               
-
                 $msg="UTENTE REGISTRATO";
-                /*echo"
-                    <script type=text/javascript>
-                        alert(. $msg .)
-                    </script>
-                ";
-                echo"
-                    <form action=valutazione.php method=POST>
-                        <input type=submit value=LOGIN>
-                    </form>
-                ";
-                */
                 $result = $conn->query($query);
 
                 if ($result->num_rows == 0) 
@@ -145,6 +101,10 @@ $conn = db();
                     {
                         echo"
                             UTENTE GIA' ESISTENTE
+                            <br>
+                            <form action=../html/index.html method=POST>
+                                <input type=submit value=RIPROVA>
+                            </form>
                         ";
                         return false;
                     }
